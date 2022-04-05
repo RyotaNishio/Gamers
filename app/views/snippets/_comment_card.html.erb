@@ -1,0 +1,11 @@
+<div class="row mb-3 ml-4 border rounded-lg w-75">
+  <div class="col-3">
+    <%= link_to user_path(comment.user.id), class: "text-decoration-none" do %>
+      <%= image_tag comment.user.profile.get_profile_image, size: "50x50", class: "rounded-circle my-2", style: "object-fit: cover; object-position: 50% 0%" %>
+      <span class="text-dark mx-2 h5"><%= comment.user.profile.user_name %></span>
+    <% end %>
+  </div>
+  <div class="col-9 py-1">
+    <%= comment.body %>
+  </div>
+</div>

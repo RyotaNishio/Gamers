@@ -1,0 +1,17 @@
+<div class="user_card text-center border rounded-lg bg-light">
+  <%= image_tag profile.get_profile_image, size: "200x200", class: "rounded-circle my-4", style: "object-fit: cover; object-position: 50% 0%" %>
+  <p class="h3"><%= profile.user_name %></p>
+  <%= link_to user_followings_path(user.id), class: "text-dark text-decoration-none" do %>
+    <span class="mr-2">Follow: <%= user.followings.count %></span>
+  <% end %>
+  <%= link_to user_followers_path(user.id), class: "text-dark text-decoration-none" do %>
+    <span>Follower: <%= user.followers.count %></span>
+  <% end %>
+  <% if user == current_user %>
+    <p><%= link_to "Edit", edit_user_profiles_path(user.id) %></p>
+  <% elsif current_user.following?(user) %>
+    <p><%= link_to "Unfollow", user_relationships_path(user.id), method: :delete %></p>
+  <% else %>
+    <p><%= link_to "Follow", user_relationships_path(user.id), method: :post %></p>
+  <% end %>
+</div>

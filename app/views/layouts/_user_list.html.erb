@@ -1,0 +1,28 @@
+<div class="container p-4">
+  <% users.each do |user| %>
+    <div class="row border rounded-lg px-4 my-4 bg-light">
+        <%= link_to user_path(user.id), class: "text-dark text-decoration-none" do %>
+          <%= image_tag user.profile.get_profile_image, size: "75x75", class: "rounded-circle my-4", style: "object-fit: cover; object-position: 50% 0%" %>
+          <span class="my-auto mx-3"><%= user.profile.user_name %></span>
+        <% end %>
+        <% if user == current_user %>
+          <span class="my-auto"><%= link_to "Edit", edit_user_profiles_path(user.id) %></span>
+        <% elsif current_user.following?(user) %>
+          <span class="my-auto"><%= link_to "Unfollow", user_relationships_path(user.id), method: :delete %></span>
+        <% else %>
+          <span class="my-auto"><%= link_to "Follow", user_relationships_path(user.id), method: :post %></span>
+        <% end %>
+        <div class="mx-4 h-min my-auto">
+          <%= link_to user_followings_path(user.id), class: "text-dark text-decoration-none" do %>
+            <p>Follow: <%= user.followings.count %></p>
+          <% end %>
+          <%= link_to user_followers_path(user.id), class: "text-dark text-decoration-none" do %>
+            <p>Follower: <%= user.followers.count %></p>
+          <% end %>
+        </div>
+        <div class="p-2 mx-3">
+          <%= user.profile.bio %>
+        </div>
+    </div>
+  <% end %>
+</div>

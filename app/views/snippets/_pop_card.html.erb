@@ -1,0 +1,18 @@
+<div class="row mb-3 border rounded-lg bg-light">
+  <div class="col-3">
+    <%= link_to user_path(pop.user.id), class: "text-decoration-none" do %>
+      <%= image_tag pop.user.profile.get_profile_image, size: "100x100", class: "rounded-circle my-4", style: "object-fit: cover; object-position: 50% 0%" %>
+      <span class="text-dark mx-2 h5"><%= pop.user.profile.user_name %></span>
+    <% end %>
+  </div>
+  <div class="col-6 py-3">
+    <%= link_to pop_path(pop.id), class: "text-decoration-none text-dark" do %>
+      <%= pop.body %>
+    <% end %>
+  </div>
+  <% if pop.image.attached? %>
+    <div class="col-3">
+      <%= image_tag pop.image, size: "125x125", class: "rounded-lg my-2", style: "object-fit: cover; object-position: 50% 0%" %>
+    </div>
+  <% end %>
+</div>
