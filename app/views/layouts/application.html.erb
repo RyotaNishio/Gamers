@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Gamers</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1 maximum-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -20,12 +20,12 @@
     </style>
   </head>
 
-  <body>
+  <body class="bg-secondary min-vh-100">
     <header>
       <%= render 'layouts/header' %>
     </header>
 
-    <main class="bg-dark" style="min-height: 681px;">
+    <main>
       <%= yield %>
     </main>
   </body>

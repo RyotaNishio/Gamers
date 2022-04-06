@@ -1,15 +1,19 @@
 class User < ApplicationRecord
 
-  has_one :profile
+  has_one :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
-  has_many :pops
-  has_many :comments
+  has_many :pops, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
 
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
 
   has_many :followings, through: :relationships, source: :followed
   has_many :followers, through: :reverse_of_relationships, source: :follower
+
+  has_many :user_rooms
+  has_many :chats
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -28,5 +32,5 @@ class User < ApplicationRecord
     followings.include?(user)
   end
 
-  
+
 end

@@ -5,10 +5,26 @@
       <span class="text-dark mx-2 h5"><%= pop.user.profile.user_name %></span>
     <% end %>
   </div>
-  <div class="col-6 py-3">
+  <div class="col-6 py-3 position-relative">
     <%= link_to pop_path(pop.id), class: "text-decoration-none text-dark" do %>
       <%= pop.body %>
     <% end %>
+    <div class="position-absolute fixed-bottom m-2">
+      <%= link_to pop_path(pop.id), class: "text-decoration-none text-dark" do %>
+        <i class="far fa-comment"></i>
+      <% end %>
+      <%= pop.comments.count %>
+      <% if pop.favorited_by?(current_user) %>
+        <%= link_to pop_favorites_path(pop), class: "text-decoration-none", method: :delete  do %>
+          <i class="fas fa-heart" style="color: hotpink;"></i>
+        <% end %>
+      <% else %>
+        <%= link_to pop_favorites_path(pop), class: "text-decoration-none", method: :post do %>
+          <i class="far fa-heart text-dark"></i>
+        <% end %>
+      <% end %>
+      <%= pop.favorites.count %>
+    </div>
   </div>
   <% if pop.image.attached? %>
     <div class="col-3">

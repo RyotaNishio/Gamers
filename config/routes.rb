@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root to: "homes#top"
   resources :pops, only:[:new, :index, :create, :show, :edit, :update, :destroy] do
     resources :comments, only:[:create, :destroy]
+    resource :favorites, only:[:create, :destroy]
   end
   resources :users, only: [:index, :show] do
     resource :profiles, only:[:edit, :update]
@@ -11,4 +12,6 @@ Rails.application.routes.draw do
     get 'followings' => 'relationships#followings', as: 'followings'
     get 'followers' => 'relationships#followers', as: 'followers'
   end
+  get 'chat/:id' => 'chats#show', as: 'chat'
+  resources :chats, only: [:create]
 end

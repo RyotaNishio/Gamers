@@ -1,8 +1,8 @@
-<div class="container mt-5">
+<div class="container pt-5">
     <%= render 'snippets/pop_card', pop: @pop %>
     <div class="comment-form my-4">
       <%= form_with model: [@pop, @comment], method: :post do |f| %>
-        <div class="form-field mb-2 w-75">
+        <div class="form-field mb-2 w-75 text-light">
           <label for="body">Comment</label>
           <%= f.text_area :body, class: "form-control" %>
         </div>
