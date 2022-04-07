@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
     comment.user = current_user
     comment.pop = pop
     comment.save
+    pop.create_notification_comment!(current_user, comment.id)
     redirect_to pop_path(params[:pop_id])
   end
 

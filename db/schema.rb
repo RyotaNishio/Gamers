@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_06_033838) do
+ActiveRecord::Schema.define(version: 2022_04_06_042136) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2022_04_06_033838) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "message"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00007f791c81e218>"
+    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x0000000003d37568>"
     t.index ["room_id"], name: "index_chats_on_room_id"
     t.index ["user_id"], name: "index_chats_on_user_id"
   end
@@ -68,6 +68,23 @@ ActiveRecord::Schema.define(version: 2022_04_06_033838) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["pop_id"], name: "index_favorites_on_pop_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "visitor_id", null: false
+    t.integer "visited_id", null: false
+    t.integer "pop_id"
+    t.integer "room_id"
+    t.integer "comment_id"
+    t.integer "chat_id"
+    t.string "action", default: "", null: false
+    t.boolean "checked", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["chat_id"], name: "index_notifications_on_chat_id"
+    t.index ["comment_id"], name: "index_notifications_on_comment_id"
+    t.index ["pop_id"], name: "index_notifications_on_pop_id"
+    t.index ["room_id"], name: "index_notifications_on_room_id"
   end
 
   create_table "pops", force: :cascade do |t|
@@ -127,6 +144,10 @@ ActiveRecord::Schema.define(version: 2022_04_06_033838) do
   add_foreign_key "chats", "users"
   add_foreign_key "favorites", "pops"
   add_foreign_key "favorites", "users"
+  add_foreign_key "notifications", "chats"
+  add_foreign_key "notifications", "comments"
+  add_foreign_key "notifications", "pops"
+  add_foreign_key "notifications", "rooms"
   add_foreign_key "pops", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "user_rooms", "rooms"
