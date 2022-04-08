@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2022_04_06_042136) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "message"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x0000000003d37568>"
+    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00000000031d0e40>"
     t.index ["room_id"], name: "index_chats_on_room_id"
     t.index ["user_id"], name: "index_chats_on_user_id"
   end
