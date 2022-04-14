@@ -1,0 +1,9 @@
+<% @reports.each do |report| %>
+  <div class="rounded-lg bg-light p-3 m-5">
+    <p><strong>Reportor</strong>: <%= report.reportor.email %></p>
+    <p><strong>Reported User</strong>: <%= report.reported_user.email %></p>
+    <p class="h5">Content: </p>
+    <p class="p-1 mx-2"><%= report.content %></p>
+    <%= link_to "Delete this user", admin_user_path(report.reported_user.id), class: "btn btn-danger", data: { confirm: "Are you sure to delete user " + report.reported_user.email + " ?" } %>
+  </div>
+<% end %>

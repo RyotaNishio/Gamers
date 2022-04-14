@@ -5,6 +5,10 @@ class User < ApplicationRecord
   has_many :pops, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+  has_one :party, foreign_key: 'owner_id', dependent: :destroy
+
+  has_one :reportor, class_name: "Report", foreign_key: "reportor_id"
+  has_one :reported_user, class_name: "Report", foreign_key: "reported_user_id"
 
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
@@ -33,6 +37,12 @@ class User < ApplicationRecord
 
   def following?(user)
     followings.include?(user)
+  end
+
+  def self.guest
+    find_or_create_by!(email: 'guest@example.com') do |user|
+      user.password = SecureRandom.urlsafe_base64
+    end
   end
 
   def create_notification_follow!(current_user)

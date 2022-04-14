@@ -18,6 +18,14 @@ class Users::SessionsController < Devise::SessionsController
   #   super
   # end
 
+  def guest_sign_in
+    user = User.guest
+    user.build_profile(user_name: "guest", image: nil, user_id: user.id)
+    user.profile.save
+    sign_in user
+    redirect_to root_path
+  end
+
   # protected
 
   # If you have extra params to permit, append them to the sanitizer.

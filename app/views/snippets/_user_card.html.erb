@@ -8,13 +8,21 @@
     <span>Follower: <%= user.followers.count %></span>
   <% end %>
   <% if user == current_user %>
-    <p><%= link_to "Edit", edit_user_profiles_path(user.id) %></p>
+    <%= link_to edit_user_profiles_path(user.id), class: "text-decoration-none text-dark" do %>
+      <p class="my-2"><i class="fas fa-user-edit"></i>Edit</p>
+    <% end %>
   <% elsif current_user.following?(user) %>
-    <p><%= link_to "Unfollow", user_relationships_path(user.id), method: :delete %></p>
+    <%= link_to user_relationships_path(user.id), class: "text-decoration-none text-dark", method: :delete do %>
+      <p class="my-2"><i class="fas fa-users"></i>Unfollow</p>
+    <% end %>
   <% else %>
-    <p><%= link_to "Follow", user_relationships_path(user.id), method: :post %></p>
+    <%= link_to user_relationships_path(user.id), class: "text-decoration-none text-dark", method: :post do %>
+      <p class="my-2"><i class="fas fa-users"></i>Follow</p>
+    <% end %>
   <% end %>
   <% if current_user != @user %>
-    <%= link_to 'chatを始める', chat_path(@user.id)%>
+    <%= link_to chat_path(@user.id), class: "text-decoration-none text-dark" do %>
+      <p><i class="fas fa-envelope"></i>Meassage</p>
+    <% end %>
   <% end %>
 </div>

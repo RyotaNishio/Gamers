@@ -1,0 +1,33 @@
+<div class="text-center justify-content-center form-signin" style="padding-top: 50px;">
+  <div class="w-25 m-auto rounded-lg p-4 bg-light container">
+    <% @notifications.each do |notification| %>
+      <div class="row">
+        <span class="mr-2">
+          <%= image_tag notification.visitor.profile.get_profile_image, size: "30x30", class: "rounded-circle", style: "object-fit: cover; object-position: 50% 0%" %>
+          <%= notification.visitor.profile.user_name %>
+        </span>
+        <% case notification.action when 'follow' %>
+          <%= link_to user_path(notification.visitor_id) do %>
+            <span>followed you</span>
+          <% end %>
+        <% when 'favorite' %>
+          <%= link_to pop_path(notification.pop_id) do %>
+            <span>liked your pop</span>
+          <% end %>
+        <% when 'comment' %>
+          <%= link_to pop_path(notification.pop_id) do %>
+            <sapn>commented your pop</sapn>
+          <% end %>
+        <% when 'chat' %>
+          <%= link_to chat_path(notification.room_id) do %>
+            <span>sent you a message</span>
+          <% end %>
+        <% when 'join_party' %>
+          <%= link_to party_path(notification.party_id) do %>
+            <span>joined your party</span>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<div class="mt-5 d-flex flex-wrap">
+  <% @parties.each do |party| %>
+    <div class="rounded-lg bg-light p-3 mx-5 w-25">
+      <%= link_to party_path(party.id), class: "text-decoration-none text-dark" do %>
+        <p class="h3"><%= party.title %></p>
+        <p class="mx-3">
+          Owner: <%= image_tag party.owner.profile.get_profile_image, size: "40x40", class: "rounded-circle", style: "object-fit: cover; object-position: 50% 0%" %>
+          <%= party.owner.profile.user_name %>
+        </p>
+        <p class="mx-3">
+          Recruitment Numbers: <%= party.joined_users.count %> / <%= party.recruitment_numbers %>
+        </p>
+        <p class="mx-3">Difficulty: <%= party.difficulty %></p>
+        <p class="mx-3"><%= party.introduction %></p>
+      <% end %>
+    </div>
+  <% end %>
+</div>

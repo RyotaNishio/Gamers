@@ -24,6 +24,11 @@
         <% end %>
       <% end %>
       <%= pop.favorites.count %>
+      <% if pop.user == current_user %>
+        <%= link_to edit_pop_path(pop.id), class: "text-decoration-none text-dark" do %>
+          <i class="far fa-edit"></i>
+        <% end %>
+      <% end %>
     </div>
   </div>
   <% if pop.image.attached? %>

@@ -1,0 +1,21 @@
+<div class="container p-4">
+  <span class="h3 bg-light rounded-circle px-4 py-2">
+    All users
+  </span>
+  <% @users.each do |user| %>
+    <div class="row border rounded-lg px-4 my-4 bg-light">
+      <div class="col-3">
+        <%= image_tag user.profile.get_profile_image, size: "75x75", class: "rounded-circle my-4", style: "object-fit: cover; object-position: 50% 0%" %>
+        <span class="my-auto mx-3"><%= user.profile.user_name %></span>
+      </div>
+      <div class="col-2 h-100 my-auto">
+        <%= link_to edit_admin_user_path(user.id), class: "text-decoration-none text-dark" do %>
+            <i class="fas fa-user-edit"></i>Edit
+        <% end %>
+      </div>
+      <div class="py-3 col-5">
+        <%= user.profile.bio %>
+      </div>
+    </div>
+  <% end %>
+</div>

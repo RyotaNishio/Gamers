@@ -1,0 +1,22 @@
+<div class="rounded-lg bg-light p-3 w-50 mx-auto mt-5">
+  <div class="border border-secondary container p-1 mb-2 rounded-lg">
+    <% @chats.each do |chat| %>
+      <% if chat.user == current_user %>
+        <div class="row m-1 text-right w-100">
+          <span class="rounded-lg bg-secondary text-light p-1 mr-1 ml-auto"><%= chat.message %><span>
+        </div>
+      <% else %>
+        <div class="row m-1"></div>
+          <%= image_tag chat.user.profile.get_profile_image, size: "30x30", class: "rounded-circle", style: "object-fit: cover; object-position: 50% 0%" %>
+          <span class="rounded-lg bg-dark text-light p-1"><%= chat.message %></span>
+      <% end %>
+    <% end %>
+  </div>
+  <div>
+    <%= form_with model: @chat do |f| %>
+        <%= f.text_area :message, class: "form-control mb-2" %>
+        <%= f.hidden_field :room_id %>
+        <%= f.submit "Send", class: "btn btn-success h-min" %>
+    <% end %>
+  </div>
+</div>

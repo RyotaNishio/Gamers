@@ -1,0 +1,32 @@
+<div class="rounded-lg bg-light m-5 p-3">
+  <p class="h3"><%= @party.title %></p>
+  <%= link_to user_path(@party.owner.id), class: "text-decoration-none text-dark" do %>
+    <p class="mx-3">
+      Owner: <%= image_tag @party.owner.profile.get_profile_image, size: "40x40", class: "rounded-circle", style: "object-fit: cover; object-position: 50% 0%" %>
+      <%= @party.owner.profile.user_name %>
+    </p>
+  <% end %>
+  <p class="mx-3">
+    Recruitment Numbers: <%= @party.joined_users.count %> / <%= @party.recruitment_numbers %>
+  </p>
+  <p class="mx-3">
+    Joined Members:
+    <% @party.joined_users.each do |user| %>
+      <%= link_to user_path(user.id), class: "text-decoration-none text-dark" do %>
+        <%= image_tag user.profile.get_profile_image, size: "40x40", class: "rounded-circle", style: "object-fit: cover; object-position: 50% 0%" %>
+        <%= user.profile.user_name %>
+      <% end %>
+    <% end %>
+  </p>
+  <p class="mx-3">Difficulty: <%= @party.difficulty %></p>
+  <p class="mx-3 h5">Introduction</p>
+  <p class="mx-3 p-1"><%= @party.introduction %></p>
+  <% if @party.joined?(current_user) %>
+    <%= link_to "Withdraw", withdraw_party_path(@party.id), class: "btn btn-danger", method: :put %>
+  <% elsif current_user.party_id.nil?  %>
+    <%= link_to "Join", join_party_path(@party.id), class: "btn btn-success", method: :put %>
+  <% end %>
+  <% if current_user == @party.owner %>
+    <%= link_to "Edit", edit_party_path(@party.id), class: "btn btn-primary" %>
+  <% end %>
+</div>

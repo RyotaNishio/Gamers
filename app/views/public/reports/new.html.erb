@@ -1,0 +1,14 @@
+<div class="w-25 my-5 mx-auto bg-light rounded-lg p-4 text-center mb-2">
+  <p class="h2 mb-2">Do you report <%= @user.profile.user_name %>?</p>
+  <%= form_with model: @report, url: user_reports_path, method: :post do |f| %>
+    <%= f.hidden_field :reportor_id, value: current_user.id %>
+    <%= f.hidden_field :reported_user_id, value: @user.id %>
+    <div class="field mb-2">
+      <%= f.text_area :content, class: "form-control" %>
+    </div>
+    <div class="actions">
+      <%= f.submit "report", class: "btn btn-danger mt-2 w-100" %>
+    </div>
+  <% end %>
+  <p class="mt-2 mb-3 text-muted">&copy; 2017–2021</p>
+</div>

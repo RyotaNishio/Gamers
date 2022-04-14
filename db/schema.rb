@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_04_06_042136) do
+ActiveRecord::Schema.define(version: 2022_04_12_060200) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -40,13 +40,25 @@ ActiveRecord::Schema.define(version: 2022_04_06_042136) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
   create_table "chats", force: :cascade do |t|
     t.integer "user_id"
     t.integer "room_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "message"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x00000000031d0e40>"
+    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x0000000004b03b10>"
     t.index ["room_id"], name: "index_chats_on_room_id"
     t.index ["user_id"], name: "index_chats_on_user_id"
   end
@@ -77,14 +89,26 @@ ActiveRecord::Schema.define(version: 2022_04_06_042136) do
     t.integer "room_id"
     t.integer "comment_id"
     t.integer "chat_id"
+    t.integer "party_id"
     t.string "action", default: "", null: false
     t.boolean "checked", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["chat_id"], name: "index_notifications_on_chat_id"
     t.index ["comment_id"], name: "index_notifications_on_comment_id"
+    t.index ["party_id"], name: "index_notifications_on_party_id"
     t.index ["pop_id"], name: "index_notifications_on_pop_id"
     t.index ["room_id"], name: "index_notifications_on_room_id"
+  end
+
+  create_table "parties", force: :cascade do |t|
+    t.integer "owner_id"
+    t.string "title"
+    t.text "introduction"
+    t.integer "difficulty"
+    t.integer "recruitment_numbers"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "pops", force: :cascade do |t|
@@ -112,6 +136,14 @@ ActiveRecord::Schema.define(version: 2022_04_06_042136) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "reports", force: :cascade do |t|
+    t.integer "reportor_id"
+    t.integer "reported_user_id"
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -129,12 +161,14 @@ ActiveRecord::Schema.define(version: 2022_04_06_042136) do
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.integer "party_id"
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["party_id"], name: "index_users_on_party_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -146,10 +180,12 @@ ActiveRecord::Schema.define(version: 2022_04_06_042136) do
   add_foreign_key "favorites", "users"
   add_foreign_key "notifications", "chats"
   add_foreign_key "notifications", "comments"
+  add_foreign_key "notifications", "parties"
   add_foreign_key "notifications", "pops"
   add_foreign_key "notifications", "rooms"
   add_foreign_key "pops", "users"
   add_foreign_key "profiles", "users"
   add_foreign_key "user_rooms", "rooms"
   add_foreign_key "user_rooms", "users"
+  add_foreign_key "users", "parties"
 end
