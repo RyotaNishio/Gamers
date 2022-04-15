@@ -1,28 +1,32 @@
 <div class="user_card text-center border rounded-lg bg-light">
   <%= image_tag profile.get_profile_image, size: "200x200", class: "rounded-circle my-4", style: "object-fit: cover; object-position: 50% 0%" %>
   <p class="h3"><%= profile.user_name %></p>
-  <%= link_to user_followings_path(user.id), class: "text-dark text-decoration-none" do %>
-    <span class="mr-2">Follow: <%= user.followings.count %></span>
-  <% end %>
-  <%= link_to user_followers_path(user.id), class: "text-dark text-decoration-none" do %>
-    <span>Follower: <%= user.followers.count %></span>
-  <% end %>
-  <% if user == current_user %>
-    <%= link_to edit_user_profiles_path(user.id), class: "text-decoration-none text-dark" do %>
-      <p class="my-2"><i class="fas fa-user-edit"></i>Edit</p>
-    <% end %>
-  <% elsif current_user.following?(user) %>
-    <%= link_to user_relationships_path(user.id), class: "text-decoration-none text-dark", method: :delete do %>
-      <p class="my-2"><i class="fas fa-users"></i>Unfollow</p>
-    <% end %>
+  <% if user.guest? %>
   <% else %>
-    <%= link_to user_relationships_path(user.id), class: "text-decoration-none text-dark", method: :post do %>
-      <p class="my-2"><i class="fas fa-users"></i>Follow</p>
+    <%= link_to user_followings_path(user.id), class: "text-dark text-decoration-none" do %>
+      <span class="mr-2">Follow: <%= user.followings.count %></span>
     <% end %>
-  <% end %>
-  <% if current_user != @user %>
-    <%= link_to chat_path(@user.id), class: "text-decoration-none text-dark" do %>
-      <p><i class="fas fa-envelope"></i>Meassage</p>
+    <%= link_to user_followers_path(user.id), class: "text-dark text-decoration-none" do %>
+      <span>Follower: <%= user.followers.count %></span>
+    <% end %>
+    <% if current_user.guest? %>
+    <% elsif user == current_user %>
+      <%= link_to edit_user_profiles_path(user.id), class: "text-decoration-none text-dark" do %>
+        <p class="my-2"><i class="fas fa-user-edit"></i>Edit</p>
+      <% end %>
+    <% elsif current_user.following?(user) %>
+      <%= link_to user_relationships_path(user.id), class: "text-decoration-none text-dark", method: :delete do %>
+        <p class="my-2"><i class="fas fa-users"></i>Unfollow</p>
+      <% end %>
+    <% else %>
+      <%= link_to user_relationships_path(user.id), class: "text-decoration-none text-dark", method: :post do %>
+        <p class="my-2"><i class="fas fa-users"></i>Follow</p>
+      <% end %>
+    <% end %>
+    <% if current_user != @user && !current_user.guest? %>
+      <%= link_to chat_path(@user.id), class: "text-decoration-none text-dark" do %>
+        <p><i class="fas fa-envelope"></i>Meassage</p>
+      <% end %>
     <% end %>
   <% end %>
 </div>

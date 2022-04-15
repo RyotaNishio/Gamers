@@ -6,6 +6,8 @@ class Pop < ApplicationRecord
 
   has_one_attached :image
 
+  validates :body, presence: true
+
   def favorited_by?(user)
     favorites.exists?(user: user)
   end

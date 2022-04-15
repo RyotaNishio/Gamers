@@ -61,3 +61,4 @@ gem 'pry-byebug', group: :development
 
 gem "enum_help"
 
+gem 'ransack'

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :pops, only:[:new, :index, :create, :show, :edit, :update, :destroy] do
       collection do
         get :only_followings
+        get :search
       end
       resources :comments, only:[:create, :destroy]
       resource :favorites, only:[:create, :destroy]

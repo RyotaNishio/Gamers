@@ -21,7 +21,10 @@
   <p class="mx-3">Difficulty: <%= @party.difficulty %></p>
   <p class="mx-3 h5">Introduction</p>
   <p class="mx-3 p-1"><%= @party.introduction %></p>
-  <% if @party.joined?(current_user) %>
+  <% if current_user.guest? %>
+    <span>You need to signin to join a party</span>
+    <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-primary py-0" %>
+  <% elsif @party.joined?(current_user) %>
     <%= link_to "Withdraw", withdraw_party_path(@party.id), class: "btn btn-danger", method: :put %>
   <% elsif current_user.party_id.nil?  %>
     <%= link_to "Join", join_party_path(@party.id), class: "btn btn-success", method: :put %>

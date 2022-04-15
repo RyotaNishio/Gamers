@@ -23,7 +23,7 @@ class Users::SessionsController < Devise::SessionsController
     user.build_profile(user_name: "guest", image: nil, user_id: user.id)
     user.profile.save
     sign_in user
-    redirect_to root_path
+    redirect_to pops_path
   end
 
   # protected

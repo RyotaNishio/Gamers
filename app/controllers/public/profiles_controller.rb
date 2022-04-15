@@ -1,4 +1,6 @@
 class Public::ProfilesController < ApplicationController
+  before_action :require_sign_in
+
   def edit
     @user = User.find(params[:user_id])
     @profile = @user.profile
@@ -17,5 +19,11 @@ class Public::ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(:image, :user_name, :birthday, :bio)
+  end
+
+  def require_sign_in
+    if current_user.guest?
+      redirect_to root_path
+    end
   end
 end

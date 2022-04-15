@@ -5,7 +5,7 @@
       <div class="search-form mx-auto mt-3 bg-light p-2 rounded-lg">
         <%= search_form_for @q, url: search_pops_path do |f| %>
           <%= f.label :body_cont, 'Pops' %>
-          <%= f.search_field :body_cont, class: "form_control" %>
+          <%= f.search_field :body_cont %>
           <%= f.submit 'Search', class: "btn btn-success py-0" %>
         <% end %>
       </div>

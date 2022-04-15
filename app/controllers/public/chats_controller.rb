@@ -1,9 +1,14 @@
 class Public::ChatsController < ApplicationController
   def create
+    @room = Room.find(params[:chat][:room_id])
+    @chats = @room.chats
     @chat = current_user.chats.new(chat_params)
-    @chat.save
-    @chat.room.create_notification_chat!(current_user, @chat.id)
-    redirect_to request.referer
+    if @chat.save
+      @chat.room.create_notification_chat!(current_user, @chat.id)
+      redirect_to request.referer
+    else
+      render :show
+    end
   end
 
   def show

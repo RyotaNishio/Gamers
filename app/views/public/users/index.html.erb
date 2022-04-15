@@ -1,1 +1,8 @@
+<div class="search-form mx-auto mt-3 bg-light w-50 p-2 rounded-lg">
+  <%= search_form_for @q, url: search_users_path do |f| %>
+    <%= f.label :profile_user_name_cont, 'Username' %>
+    <%= f.search_field :profile_user_name_cont %>
+    <%= f.submit 'Search', class: "btn btn-success py-0" %>
+<% end %>
+</div>
 <%= render 'layouts/user_list', users: @users, title: "All users" %>

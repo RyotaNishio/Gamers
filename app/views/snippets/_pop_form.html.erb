@@ -1,13 +1,19 @@
 <div class="bg-light h-min p-4 rounded-lg">
-  <%= form_with model: pop, method: :post do |f| %>
-    <div class="form-field">
-      <%= f.label :body %>
-      <%= f.text_area :body, class: "form-control" %>
-    </div>
-    <div class="form-field my-2">
-      <%= f.label :image, class: "btn btn-secondary" %>
-      <%= f.file_field :image, class: "d-none" %>
-    </div>
-    <%= f.submit 'pop', class: "btn btn-success w-100" %>
+  <% if current_user.guest? %>
+    <p class="h6">If you want to post pops.</p>
+    <p class="h6">Please Logout guestuser and Sign in your account.</p>
+    <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "btn btn-primary w-100 py-0 mt-2" %>
+  <% else %>
+    <%= form_with model: pop, method: :post do |f| %>
+      <div class="form-field">
+        <%= f.label :body %>
+        <%= f.text_area :body, class: "form-control" %>
+      </div>
+      <div class="form-field my-2">
+        <%= f.label :image, class: "btn btn-secondary" %>
+        <%= f.file_field :image, class: "d-none" %>
+      </div>
+      <%= f.submit 'pop', class: "btn btn-success w-100" %>
+    <% end %>
   <% end %>
 </div>

@@ -1,0 +1,8 @@
+<% if @users.present? %>
+  <%= render 'layouts/user_list', users: @users, title: "#{@users.count}users exist." %>
+<% else %>
+  <div class="my-5 py-5 text-center">
+    <span class="h3 text-light">No one exist</p>
+    <%= link_to "Return all users", users_path, class: "btn btn-primary mx-auto" %>
+  </div>
+<% end %>

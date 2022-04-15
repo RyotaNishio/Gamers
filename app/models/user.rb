@@ -45,6 +45,10 @@ class User < ApplicationRecord
     end
   end
 
+  def guest?
+    profile.user_name == 'guest'
+  end
+
   def create_notification_follow!(current_user)
     temp = Notification.where(["visitor_id = ? and visited_id = ? and action = ? ",current_user.id, id, 'follow'])
     if temp.blank?

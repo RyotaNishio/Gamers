@@ -1,4 +1,6 @@
 class Public::CommentsController < ApplicationController
+  before_action :require_sign_in, only: [:create]
+
   def create
     pop = Pop.find(params[:pop_id])
     comment = Comment.new(comment_params)
@@ -19,5 +21,11 @@ class Public::CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def require_sign_in
+    if current_user.guest?
+      redirect_to new_user_registration_path
+    end
   end
 end

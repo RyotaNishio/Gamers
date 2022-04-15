@@ -25,8 +25,8 @@
       <% end %>
       <%= pop.favorites.count %>
       <% if pop.user == current_user %>
-        <%= link_to edit_pop_path(pop.id), class: "text-decoration-none text-dark" do %>
-          <i class="far fa-edit"></i>
+        <%= link_to pop_path(pop.id), class: "text-decoration-none text-danger", method: :delete, data: { confirm: "Are you sure to delete this pop ?" } do %>
+          <i class="far fa-trash-alt"></i>
         <% end %>
       <% end %>
     </div>
