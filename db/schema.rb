@@ -55,10 +55,9 @@ ActiveRecord::Schema.define(version: 2022_04_17_053311) do
   create_table "chats", force: :cascade do |t|
     t.integer "user_id"
     t.integer "room_id"
+    t.string "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "message"
-    t.string "#<ActiveRecord::ConnectionAdapters::SQLite3::TableDefinition:0x0000000006fba198>"
     t.index ["room_id"], name: "index_chats_on_room_id"
     t.index ["user_id"], name: "index_chats_on_user_id"
   end
