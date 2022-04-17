@@ -1,5 +1,5 @@
 class AddPartyColumnsToUsers < ActiveRecord::Migration[6.1]
   def change
-    add_reference :users, :party, foreign_key: true
+    add_column :users, :party_id, :bigint
   end
 end
