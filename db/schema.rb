@@ -14,12 +14,10 @@ ActiveRecord::Schema.define(version: 2022_04_17_053311) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
-    t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+    t.index "\"record_type\", \"record_id\", \"name\", \"blob_id\"", name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
@@ -53,51 +51,40 @@ ActiveRecord::Schema.define(version: 2022_04_17_053311) do
   end
 
   create_table "chats", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "room_id"
+    t.bigint "user_id"
+    t.bigint "room_id"
     t.string "message"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["room_id"], name: "index_chats_on_room_id"
-    t.index ["user_id"], name: "index_chats_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "pop_id"
+    t.bigint "user_id"
+    t.bigint "pop_id"
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["pop_id"], name: "index_comments_on_pop_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "pop_id"
+    t.bigint "user_id"
+    t.bigint "pop_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["pop_id"], name: "index_favorites_on_pop_id"
-    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
     t.integer "visitor_id", null: false
     t.integer "visited_id", null: false
-    t.integer "pop_id"
-    t.integer "room_id"
-    t.integer "comment_id"
-    t.integer "chat_id"
-    t.integer "party_id"
+    t.bigint "pop_id"
+    t.bigint "room_id"
+    t.bigint "comment_id"
+    t.bigint "chat_id"
+    t.bigint "party_id"
     t.string "action", default: "", null: false
     t.boolean "checked", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["chat_id"], name: "index_notifications_on_chat_id"
-    t.index ["comment_id"], name: "index_notifications_on_comment_id"
-    t.index ["party_id"], name: "index_notifications_on_party_id"
-    t.index ["pop_id"], name: "index_notifications_on_pop_id"
-    t.index ["room_id"], name: "index_notifications_on_room_id"
   end
 
   create_table "parties", force: :cascade do |t|
@@ -111,21 +98,19 @@ ActiveRecord::Schema.define(version: 2022_04_17_053311) do
   end
 
   create_table "pops", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.text "body"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_pops_on_user_id"
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.integer "user_id"
+    t.bigint "user_id"
     t.string "user_name"
     t.text "bio"
     t.date "birthday"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -149,12 +134,10 @@ ActiveRecord::Schema.define(version: 2022_04_17_053311) do
   end
 
   create_table "user_rooms", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "room_id"
+    t.bigint "user_id"
+    t.bigint "room_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["room_id"], name: "index_user_rooms_on_room_id"
-    t.index ["user_id"], name: "index_user_rooms_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -165,26 +148,11 @@ ActiveRecord::Schema.define(version: 2022_04_17_053311) do
     t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "party_id"
+    t.bigint "party_id"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["party_id"], name: "index_users_on_party_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "chats", "rooms"
-  add_foreign_key "chats", "users"
-  add_foreign_key "favorites", "pops"
-  add_foreign_key "favorites", "users"
-  add_foreign_key "notifications", "chats"
-  add_foreign_key "notifications", "comments"
-  add_foreign_key "notifications", "parties"
-  add_foreign_key "notifications", "pops"
-  add_foreign_key "notifications", "rooms"
-  add_foreign_key "pops", "users"
-  add_foreign_key "profiles", "users"
-  add_foreign_key "user_rooms", "rooms"
-  add_foreign_key "user_rooms", "users"
-  add_foreign_key "users", "parties"
 end
