@@ -1,9 +1,9 @@
 class CreateComments < ActiveRecord::Migration[6.1]
   def change
     create_table :comments do |t|
-      t.references :user
-      t.references :pop
-      t.text :body, foreign_key: true
+      t.bigint :user_id, foreign_key: true
+      t.bigint :pop_id, foreign_key: true
+      t.text :body
 
       t.timestamps
     end
