@@ -9,9 +9,7 @@
         <span class="my-auto mx-3"><%= user.profile.user_name %></span>
       </div>
       <div class="col-2 h-100 my-auto">
-        <%= link_to edit_admin_user_path(user.id), class: "text-decoration-none text-dark" do %>
-            <i class="fas fa-user-edit"></i>Edit
-        <% end %>
+        <%= link_to admin_user_path(user.id), class: "btn btn-danger", method: :delete, data: { confirm: "Are you sure to delete user #{user.email}" %>
       </div>
       <div class="py-3 col-5">
         <%= user.profile.bio %>
