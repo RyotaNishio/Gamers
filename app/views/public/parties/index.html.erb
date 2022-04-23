@@ -1,5 +1,7 @@
+<div>
+  <%= link_to "Create New Party", new_party_path, class: "btn btn-success ml-5 my-2" %>
+</div>
 <div class="mt-5 d-flex flex-wrap">
-  <%= link_to "Create New Party", new_party_path, class: "btn btn-success" %>
   <% @parties.each do |party| %>
     <div class="rounded-lg bg-light p-3 mx-5 w-25">
       <%= link_to party_path(party.id), class: "text-decoration-none text-dark" do %>
